@@ -1,0 +1,6 @@
+/target
+push.sh
+
+# Auto generated files / sample files for testing Encryptify features.
+sample-file*
+vault/
