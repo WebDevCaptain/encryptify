@@ -238,7 +238,14 @@ dependencies = [
 ]
 
 [[package]]
-name = "encryptify"
+name = "encryptify-cli"
+version = "0.1.0"
+dependencies = [
+ "encryptify-lib",
+]
+
+[[package]]
+name = "encryptify-lib"
 version = "0.1.0"
 dependencies = [
  "aes 0.7.5",

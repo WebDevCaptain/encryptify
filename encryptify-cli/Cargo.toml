@@ -1,0 +1,7 @@
+[package]
+name = "encryptify-cli"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+encryptify-lib = { path = "../encryptify-lib" }
