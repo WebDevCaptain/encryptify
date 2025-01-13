@@ -11,13 +11,15 @@ use zip::{
 
 fn main() {
     let key = "password12345678password12345678".as_bytes();
-    let encrypted_file_path = "sample-file.txt.encrypted";
+    // let encrypted_file_path = "sample-file.txt.encrypted";
 
-    encrypt_file("sample-file.txt", &key);
+    // encrypt_file("sample-file.txt", &key);
 
-    decrypt_file(encrypted_file_path, &key);
+    // decrypt_file(encrypted_file_path, &key);
 
-    encrypt_folder("vault", &key);
+    // encrypt_folder("vault", &key);
+
+    decrypt_folder("vault.zip.encrypted", key);
 }
 
 type Aes256Cbc = Cbc<Aes256, Pkcs7>;
@@ -94,4 +96,34 @@ fn encrypt_folder(folder_path: &str, key: &[u8]) {
     zip_folder(folder_path, &zip_path);
     encrypt_file(&zip_path, key);
     fs::remove_file(&zip_path).expect("Failed to remove the intermediate zip file :|");
+}
+
+fn decrypt_folder(file_path: &str, key: &[u8]) {
+    decrypt_file(file_path, key);
+
+    let zip_path = format!("{}.decrypted", file_path); // As the decrypt file function appends .decrypted to the file name
+
+    let zip_file = File::open(&zip_path).expect("Failed to open the decrypted zip file");
+
+    let mut archive = zip::ZipArchive::new(zip_file).expect("Failed to read the Zip archive");
+
+    let output_folder = file_path.trim_end_matches(".zip.encrypted");
+
+    fs::create_dir(output_folder).expect("Failed to create the output folder");
+
+    for i in 0..archive.len() {
+        let mut file = archive
+            .by_index(i)
+            .expect("Failed to get the file from the archive");
+
+        let output_file_path = format!("{}/{}", output_folder, file.name()); // TODO: Fix security flaw here, needs sanitization
+
+        let mut output_file =
+            File::create(output_file_path).expect("Failed to create the output file");
+
+        std::io::copy(&mut file, &mut output_file)
+            .expect("Failed to copy contents to extracted file.");
+    }
+
+    fs::remove_file(&zip_path).expect("Failed to delete the intermediate 'decrypted' zip file");
 }
