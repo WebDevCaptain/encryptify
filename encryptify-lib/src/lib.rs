@@ -9,22 +9,9 @@ use zip::{
     ZipWriter,
 };
 
-fn main() {
-    let key = "password12345678password12345678".as_bytes();
-    // let encrypted_file_path = "sample-file.txt.encrypted";
-
-    // encrypt_file("sample-file.txt", &key);
-
-    // decrypt_file(encrypted_file_path, &key);
-
-    // encrypt_folder("vault", &key);
-
-    decrypt_folder("vault.zip.encrypted", key);
-}
-
 type Aes256Cbc = Cbc<Aes256, Pkcs7>;
 
-fn encrypt_file(file_path: &str, key: &[u8]) {
+pub fn encrypt_file(file_path: &str, key: &[u8]) {
     let file_content = fs::read(file_path).expect("Failed to read the file");
 
     let iv = [0u8; 16]; // Initialization vector
@@ -41,7 +28,7 @@ fn encrypt_file(file_path: &str, key: &[u8]) {
         .expect("Failed to write encrypted data to the output file");
 }
 
-fn decrypt_file(file_path: &str, key: &[u8]) {
+pub fn decrypt_file(file_path: &str, key: &[u8]) {
     let encrypted_content = fs::read(file_path).expect("Failed to read the encrypted file");
 
     let iv = [0u8; 16];
@@ -60,7 +47,7 @@ fn decrypt_file(file_path: &str, key: &[u8]) {
         .expect("Failed to write decrypted data to the output file");
 }
 
-fn zip_folder(folder_path: &str, output_path: &str) {
+pub fn zip_folder(folder_path: &str, output_path: &str) {
     let file = File::create(output_path).expect("Failed to create the output ZIP file");
 
     let mut zip = ZipWriter::new(file);
@@ -91,14 +78,14 @@ fn zip_folder(folder_path: &str, output_path: &str) {
     zip.finish().expect("Failed to finalize the zip file");
 }
 
-fn encrypt_folder(folder_path: &str, key: &[u8]) {
+pub fn encrypt_folder(folder_path: &str, key: &[u8]) {
     let zip_path = format!("{}.zip", folder_path);
     zip_folder(folder_path, &zip_path);
     encrypt_file(&zip_path, key);
     fs::remove_file(&zip_path).expect("Failed to remove the intermediate zip file :|");
 }
 
-fn decrypt_folder(file_path: &str, key: &[u8]) {
+pub fn decrypt_folder(file_path: &str, key: &[u8]) {
     decrypt_file(file_path, key);
 
     let zip_path = format!("{}.decrypted", file_path); // As the decrypt file function appends .decrypted to the file name
