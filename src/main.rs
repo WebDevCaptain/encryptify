@@ -10,19 +10,14 @@ use zip::{
 };
 
 fn main() {
+    let key = "password12345678password12345678".as_bytes();
     let encrypted_file_path = "sample-file.txt.encrypted";
 
-    encrypt_file(
-        "sample-file.txt",
-        "password12345678password12345678".as_bytes(),
-    );
+    encrypt_file("sample-file.txt", &key);
 
-    decrypt_file(
-        encrypted_file_path,
-        "password12345678password12345678".as_bytes(),
-    );
+    decrypt_file(encrypted_file_path, &key);
 
-    zip_folder("vault", "vault.zip");
+    encrypt_folder("vault", &key);
 }
 
 type Aes256Cbc = Cbc<Aes256, Pkcs7>;
@@ -92,4 +87,11 @@ fn zip_folder(folder_path: &str, output_path: &str) {
     }
 
     zip.finish().expect("Failed to finalize the zip file");
+}
+
+fn encrypt_folder(folder_path: &str, key: &[u8]) {
+    let zip_path = format!("{}.zip", folder_path);
+    zip_folder(folder_path, &zip_path);
+    encrypt_file(&zip_path, key);
+    fs::remove_file(&zip_path).expect("Failed to remove the intermediate zip file :|");
 }
