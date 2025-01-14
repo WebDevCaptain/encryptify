@@ -1,7 +1,5 @@
 name: CI pipeline
 
-# [TODO]: This workflow is using a deprecated GH action (actions-rs/toolchain@v1). Need replacement.
-
 on:
   push:
     branches:
@@ -19,9 +17,8 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Rust
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@stable
         with:
-          toolchain: stable
           components: rustfmt, clippy
 
       - name: Run formatter
@@ -37,9 +34,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Rust
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
+        uses: dtolnay/rust-toolchain@stable
 
       - name: Run tests
         run: cargo test --workspace --all-targets
@@ -52,15 +47,14 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Rust
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
+        uses: dtolnay/rust-toolchain@stable
 
       - name: Build
-        run: cargo build --workspace --all-targets --release
+        run: cargo build --workspace --all-targets
+        # run: cargo build --workspace --all-targets --release
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: encryptify-artifacts
-          path: target/release
+      # - name: Upload artifacts
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: encryptify-artifacts
+      #     path: target/release
