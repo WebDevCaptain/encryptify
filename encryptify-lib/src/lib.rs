@@ -7,7 +7,7 @@ use std::{
     io::Write,
 };
 
-use zip;
+// use zip;
 
 pub use zipper::zip_folder;
 
