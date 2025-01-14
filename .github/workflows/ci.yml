@@ -45,6 +45,7 @@ jobs:
         run: cargo test --workspace --all-targets
 
   build:
+    needs: [lint, test]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout our code

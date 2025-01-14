@@ -21,6 +21,9 @@ fn test_zip_folder_creates_zip_archive() {
     // Assert: Check if the output zip file exists
     assert!(Path::new(output_path).exists());
 
+    // Intentionally failing the test
+    assert!(false);
+
     // Cleanup: Remove the test folder and zip file
     fs::remove_dir_all(folder_path).unwrap();
     fs::remove_file(output_path).unwrap();
