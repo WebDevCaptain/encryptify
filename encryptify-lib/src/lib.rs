@@ -9,7 +9,7 @@ use std::{
 
 use zip;
 
-use zipper::zip_folder;
+pub use zipper::zip_folder;
 
 type Aes256Cbc = Cbc<Aes256, Pkcs7>;
 

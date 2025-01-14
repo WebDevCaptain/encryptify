@@ -8,6 +8,42 @@ use zip::{
     ZipWriter,
 };
 
+/// Creates a ZIP archive of a folder without deleting the original folder.
+///
+/// # Arguments
+///
+/// * `folder_path` - The path of the folder to zip.
+/// * `output_path` - The output file path for the resulting zip archive.
+///
+/// # Panics
+///
+/// This function will panic if:
+/// - The folder cannot be read.
+/// - The zip file cannot be created.
+/// - Any file inside the folder cannot be read or added to the zip file.
+///
+/// # Examples
+///
+/// ```
+/// use encryptify_lib::zip_folder;
+/// use std::fs::{self};
+///
+/// // Create a test folder and file
+/// let folder_path = "test_folder";
+/// let output_path = "test_folder.zip";
+/// fs::create_dir_all(folder_path).unwrap();
+/// std::fs::write(format!("{}/file.txt", folder_path), b"Hello, world!").unwrap();
+///
+/// // Zip the folder
+/// zip_folder(folder_path, output_path);
+///
+/// // Verify the output zip exists
+/// assert!(std::path::Path::new(output_path).exists());
+///
+/// // Cleanup
+/// fs::remove_file(output_path).unwrap();
+/// fs::remove_dir_all(folder_path).unwrap();
+/// ```
 pub fn zip_folder(folder_path: &str, output_path: &str) {
     let file = File::create(output_path).expect("Failed to create the output ZIP file");
 

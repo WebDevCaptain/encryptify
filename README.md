@@ -23,6 +23,14 @@
   ```
 
 - Decrypt
+
   ```bash
   cargo run -p encryptify-cli -- --mode decrypt --path ./sample-file.txt.enc --key hellothere123456hellothere123456
   ```
+
+- Documentation
+  ```bash
+  cargo doc --open
+  ```
+
+![Documentation](./images/zip-folder.png)
