@@ -62,26 +62,26 @@ fn test_encrypt_decrypt_folder() {
     let content2 = b"Encryptify Library is awesome! :) ";
 
     // Check if folder already exists and remove it if it does
-    if fs::metadata(&folder_path).is_ok() {
-        fs::remove_dir_all(&folder_path).expect("Failed to remove the test folder");
+    if fs::metadata(folder_path).is_ok() {
+        fs::remove_dir_all(folder_path).expect("Failed to remove the test folder");
     }
 
     // Create the folder and setup the test files
-    fs::create_dir(&folder_path).expect("Failed to create the test folder");
+    fs::create_dir(folder_path).expect("Failed to create the test folder");
     setup_test_file(&file1_path, content1);
     setup_test_file(&file2_path, content2);
 
     // Test folder encryption
-    encrypt_folder(&folder_path, &key);
+    encrypt_folder(folder_path, &key);
     assert!(fs::metadata(format!("{}.zip.encrypted", folder_path)).is_ok());
 
     // Delete the original folder to ensure that decrypt_folder creates a new one
-    fs::remove_dir_all(&folder_path).expect("Failed to remove the test folder");
+    fs::remove_dir_all(folder_path).expect("Failed to remove the test folder");
 
     decrypt_folder(&format!("{}.zip.encrypted", folder_path), &key);
 
     let output_folder = folder_path;
-    assert!(fs::metadata(&output_folder).is_ok());
+    assert!(fs::metadata(output_folder).is_ok());
 
     let file_content1 = fs::read(&file1_path).expect("Failed to read the file1");
     assert_eq!(file_content1, content1);
