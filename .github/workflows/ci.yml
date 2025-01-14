@@ -1,0 +1,65 @@
+name: CI pipeline
+
+# [TODO]: This workflow is using a deprecated GH action (actions-rs/toolchain@v1). Need replacement.
+
+on:
+  push:
+    branches:
+      - workspace
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout our code
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          components: rustfmt, clippy
+
+      - name: Run formatter
+        run: cargo fmt -- --check
+
+      - name: Run Linter
+        run: cargo clippy --workspace --all-targets -- -D warnings
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout our code
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+
+      - name: Run tests
+        run: cargo test --workspace --all-targets
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout our code
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+
+      - name: Build
+        run: cargo build --workspace --all-targets --release
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: encryptify-artifacts
+          path: target/release
