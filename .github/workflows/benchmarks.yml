@@ -1,0 +1,20 @@
+name: Benchmarks
+
+on:
+  push:
+    branches:
+      - workspace
+      - main
+
+jobs:
+  benchmarks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout our code
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Run benchmarks
+        run: cargo bench --workspace --all-targets
