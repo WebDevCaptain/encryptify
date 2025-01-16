@@ -14,9 +14,15 @@
 
 2. **Folder Encryption/Decryption**: Compress folders into ZIP archives before encrypting them.
 
-3. **AES Encryption**: Supports AES-128 for strong security. [TODO: Support for AES-256]
+3. **AES Encryption**: Supports AES-256 for strong security.
 
 ## Usage (In development)
+
+- Help
+
+  ```bash
+  cargo run -p encryptify-cli -- --help
+  ```
 
 - Encrypt
 
