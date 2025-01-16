@@ -9,6 +9,20 @@ use crate::zipper::zip_folder;
 
 type Aes256Cbc = Cbc<Aes256, Pkcs7>;
 
+/// Encrypts a file using AES-256 encryption.
+///
+/// # Arguments
+///
+/// * `file_path` - Path of the file to encrypt.
+/// * `key` - The encryption key. (32 bytes)
+///
+/// # Panics
+///
+/// This function will panic if:
+/// - The file cannot be read.
+/// - The output file cannot be created.
+/// - The encrypted data cannot be written to the output file.
+///
 pub fn encrypt_file(file_path: &str, key: &[u8]) {
     let file_content = fs::read(file_path).expect("Failed to read the file");
 
@@ -26,6 +40,20 @@ pub fn encrypt_file(file_path: &str, key: &[u8]) {
         .expect("Failed to write encrypted data to the output file");
 }
 
+/// Decrypts an AES-256 encrypted file.
+///
+/// # Arguments
+///
+/// * `file_path` - Path of the file to decrypt.
+/// * `key` - The encryption key. (32 bytes)
+///
+/// # Panics
+///
+/// This function will panic if:
+/// - The file cannot be read.
+/// - The cipher cannot be created.
+/// - The output file cannot be created.
+/// - The decrypted data cannot be written to the output file.
 pub fn decrypt_file(file_path: &str, key: &[u8]) {
     let encrypted_content = fs::read(file_path).expect("Failed to read the encrypted file");
 

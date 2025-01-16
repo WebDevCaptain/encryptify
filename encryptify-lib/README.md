@@ -16,7 +16,7 @@
 
 3. **AES Encryption**: Supports AES-256 for strong security.
 
---
+---
 
 ## Usage
 
