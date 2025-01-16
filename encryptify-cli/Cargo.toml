@@ -1,7 +1,8 @@
 [package]
 name = "encryptify-cli"
-version = "0.1.0"
+version = "1.0.0"
 edition = "2021"
 
 [dependencies]
 encryptify-lib = { path = "../encryptify-lib" }
+clap = { version = "4.5.26", features = ["derive"] }
