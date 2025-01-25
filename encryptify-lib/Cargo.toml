@@ -1,8 +1,10 @@
 [package]
 name = "encryptify-lib"
 description = "A library for encrypting and decrypting files and folders using AES-256 bit encryption."
+repository = "https://github.com/WebDevCaptain/encryptify"
+authors = ["Shreyash <hello@webdevcaptain.com>"]
 license = "MIT"
-version = "1.0.2"
+version = "1.0.3"
 edition = "2021"
 
 [dependencies]
