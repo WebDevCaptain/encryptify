@@ -1,5 +1,5 @@
 use aes::Aes256;
-use block_modes::{block_padding::Pkcs7, BlockMode, Cbc};
+use block_modes::{BlockMode, Cbc, block_padding::Pkcs7};
 use std::{
     fs::{self, File},
     io::Write,

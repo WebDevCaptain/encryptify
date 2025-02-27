@@ -4,8 +4,8 @@ use std::{
 };
 
 use zip::{
-    write::{ExtendedFileOptions, FileOptions},
     ZipWriter,
+    write::{ExtendedFileOptions, FileOptions},
 };
 
 /// Creates a ZIP archive of a folder without deleting the original folder.

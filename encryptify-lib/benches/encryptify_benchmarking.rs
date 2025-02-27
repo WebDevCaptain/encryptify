@@ -3,7 +3,7 @@ use std::{
     io::Write,
 };
 
-use criterion::{criterion_group, criterion_main, Criterion};
+use criterion::{Criterion, criterion_group, criterion_main};
 use encryptify_lib::{encrypt_file, encrypt_folder};
 
 fn setup_large_test_file(filepath: &str, size: usize) {
